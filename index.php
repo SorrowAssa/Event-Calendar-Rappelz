@@ -535,7 +535,156 @@
 						</div>
                     </div>
                 </div>
-            <!-- ./EDIT EVENT MODAL -->
+                <!-- ./EDIT EVENT MODAL -->
+
+                <!-- USER SETTINGS MODAL -->
+                <?php if(isSet($_SESSION['user_session'])) {
+                    
+                    $userData = getUserData($_SESSION['user_session']);
+                    if ($userData) {
+                        $now = time();  // TODO time() is server (website) based ! -> use time by server (rappelz) ?
+                        $nbtocome = 0;
+                        foreach($userData->events as $event) {
+                            if(strtotime($event->end) > $now) {
+                                $nbtocome++;
+                            }
+                        }
+                    ?>
+                    <div class="modal fade" id="ModalUserSettings" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog modal-mlg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title" id="myModalLabel"><?php echo $lang['USERSETTINGS_TITLE']; ?></h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-md-4 col-sm-6 col-xs-12">
+                                            <div class="info-box">
+                                                <span class="info-box-icon bg-blue"><?php echo count($userData->events); ?></span>
+
+                                                <div class="info-box-content">
+                                                    <span class="info-box-text"><?php echo $lang['USERSETTINGS_NBEVENTS']; ?></span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4 col-sm-6 col-xs-12">
+                                            <div class="info-box">
+                                                <!-- TODO create events type, not in use for the moment -->
+                                                <span class="info-box-icon bg-green">0</span>
+
+                                                <div class="info-box-content">
+                                                    <span class="info-box-text"><?php echo $lang['USERSETTINGS_NBEVENTSTYPE']; ?></span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4 col-sm-6 col-xs-12">
+                                            <div class="info-box">
+                                                <span class="info-box-icon bg-pink"><?php echo $nbtocome ?></span>
+
+                                                <div class="info-box-content">
+                                                    <span class="info-box-text"><?php echo $lang['USERSETTINGS_NBEVENTSTOCOME']; ?></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <div id="accordion">
+                                                <div class="card">
+                                                    <div class="card-header" id="headingOne">
+                                                        <h5 class="mb-0">
+                                                            <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                                <?php echo $lang['USERSETTINGS_MYEVENTS']; ?>
+                                                            </button>
+                                                        </h5>
+                                                    </div>
+
+                                                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                                                        <div class="card-body">
+                                                            <table class="table table-hover">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th scope="col"><?php echo $lang['USERSETTINGS_EVENT_TITLE'] ?></th>
+                                                                        <th scope="col"><?php echo $lang['USERSETTINGS_EVENT_SERVER'] ?></th>
+                                                                        <th scope="col"><?php echo $lang['USERSETTINGS_EVENT_DATE'] ?></th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <?php foreach($userData->events as $event) { ?>
+                                                                        <tr>
+                                                                            <td><?php echo htmlentities($event->title); ?></td>
+                                                                            <td><?php echo htmlentities($event->server); ?></td>
+                                                                            <td><?php echo htmlentities($event->start); ?></td>
+                                                                        </tr>
+                                                                    <?php } ?>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card">
+                                                    <div class="card-header" id="headingTwo">
+                                                        <h5 class="mb-0">
+                                                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                                                <?php echo $lang['USERSETTINGS_MYEVENTTYPES']; ?>
+                                                            </button>
+                                                        </h5>
+                                                    </div>
+                                                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                                                        <div class="card-body">
+                                                            <?php echo $lang['GENERAL_NOTAVAILABLE']; ?>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card">
+                                                    <div class="card-header" id="headingThree">
+                                                        <h5 class="mb-0">
+                                                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                                                <?php echo $lang['USERSETTINGS_MYSETTINGS']; ?>
+                                                            </button>
+                                                        </h5>
+                                                    </div>
+                                                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                                                        <div class="card-body">
+                                                            TODO
+                                                            <ul>
+                                                                <li>language</li>
+                                                                <li>server</li>
+                                                                <li>change password</li>
+                                                                <li><strike>change username ?</strike></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="info-box-settings">
+                                                <div>
+                                                    <span><?php echo $lang['USERSETTINGS_NAME']; ?> : </span> <?php echo htmlentities($userData->username); ?>
+                                                </div>
+                                                <div>
+                                                    <!-- TODO set flag with user language -->
+                                                    <span><?php echo $lang['USERSETTINGS_LANG']; ?> : </span> <span class="flag-icon flag-icon-fr"></span>
+                                                </div>
+                                                <div>
+                                                    <span><?php echo $lang['USERSETTINGS_SERVER']; ?> : </span> <?php echo (isset($userData->server) && trim($userData->server) !== '') ? htmlentities($userData->server) : '-'; ?>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer"></div>
+                            </div>
+                        </div>
+                    </div>
+                <?php 
+                    } 
+                } ?>
+                <!-- ./USER SETTINGS MODAL -->
+
             <!-- ./MODALS -->
         </div>
 

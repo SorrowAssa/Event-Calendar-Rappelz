@@ -143,4 +143,52 @@ function noConnectedModal($lang, $token){?>
 <?php
 }
 
+/**
+ * Get data for a given user (events created...)
+ *
+ * @param string $username		Username of the user
+ * @return UserData				UserData found for the user, else null
+ */
+function getUserData(string $username) {
+	require_once 'class/UserData.php'; 
+
+	try {
+        global $bdd;
+        $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);    
+        $query = $bdd->prepare('SELECT id, username, role, language, server FROM users WHERE username = :username');
+		$query->execute([
+			'username' => $username
+		]);
+		$userData = $query->fetchAll(PDO::FETCH_CLASS, 'UserData')[0];
+		$userData->events = getUserEventsBasicInfo($username);
+		return $userData;
+    } catch (PDOException $e) {
+        // $error = $e->getMessage();
+        return null;
+	}
+}
+
+/**
+ * Get the list of events created by a user
+ *
+ * @param string $username		Username of the user
+ * @return EventBasicInfo[]		EventBasicInfo array
+ */
+function getUserEventsBasicInfo(string $username) {
+	require_once 'class/Event.php'; 
+
+	try {
+        global $bdd;
+        $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
+        $query = $bdd->prepare('SELECT id, title, server, start, end FROM events WHERE organisateur = :organisateur ORDER BY start desc');
+        $query->execute([
+			'organisateur' => $username
+		]);
+		return $query->fetchAll(PDO::FETCH_CLASS, 'EventBasicInfo');
+    } catch (PDOException $e) {
+        // $error = $e->getMessage();
+        return [];
+    }
+}
+
 ?>

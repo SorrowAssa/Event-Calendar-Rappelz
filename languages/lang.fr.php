@@ -14,6 +14,7 @@ $lang['GENERAL_CLOSE'] = 'Fermer';
 $lang['GENERAL_REGISTER'] = 'M\'inscrire !';
 $lang['GENERAL_WELCOME'] = 'Bienvenue ';
 $lang['GENERAL_ADMIN'] = 'Administrateur';
+$lang['GENERAL_NOTAVAILABLE'] = 'Non disponible pour le moment !';
 
 // GENERIC VALIDATION
 $lang['FIELD_REQUIRED'] = '&nbsp; Ce champ est obligatoire';
@@ -114,5 +115,21 @@ $lang['EVENTSHOW_TEXTSEARCH'] = 'Look for a person available to help you organiz
 $lang['EVENTSHOW_SELECTEVENTLOCA'] = 'Lieu de l\'événement';
 $lang['EVENTSHOW_TEXTDONA'] = 'Donator(s) - Separate each entry with a comma (5 max)';
 $lang['EVENTSHOW_DELETE'] = 'Delete this event';
+
+// USER SETTINGS
+$lang['USERSETTINGS_TITLE'] = 'Mon compte';
+$lang['USERSETTINGS_NBEVENTS'] = 'Events réalisés';
+$lang['USERSETTINGS_NBEVENTSTYPE'] = 'Types d\'events créés';
+$lang['USERSETTINGS_NBEVENTSTOCOME'] = 'Events à venir';
+$lang['USERSETTINGS_NAME'] = 'Nom';
+$lang['USERSETTINGS_LANG'] = 'Langue';
+$lang['USERSETTINGS_SERVER'] = 'Serveur';
+$lang['USERSETTINGS_MYEVENTS'] = 'Mes events';
+$lang['USERSETTINGS_MYEVENTTYPES'] = 'Mes types d\'events';
+$lang['USERSETTINGS_MYSETTINGS'] = 'Mes paramètres';
+$lang['USERSETTINGS_EVENT_TITLE'] = 'Titre';
+$lang['USERSETTINGS_EVENT_SERVER'] = 'Serveur';
+$lang['USERSETTINGS_EVENT_DATE'] = 'Date';
+
 
 ?>

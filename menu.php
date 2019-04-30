@@ -71,13 +71,15 @@
                                         <span class="fa fa-trophy"></span>
                                         <?php echo $lang['MENU_DONATORS']; ?>
                                     </a>
-                                </li>						
+                                </li>	
+                                <?php if(isSet($_SESSION['user_session'])) { ?>					
                                 <li>
-								    <a>
+								    <a onclick="$('#ModalUserSettings').modal('show');">
                                         <span class="fa fa-cogs"></span>
                                         <?php echo $lang['MENU_SETTINGS']; ?>
                                     </a>
-								</li>
+                                </li>
+                                <?php } ?>
 								<li>
                                     <a>
                                         <span class="fa fa-globe"></span>
