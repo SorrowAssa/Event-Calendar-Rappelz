@@ -6,7 +6,44 @@
 	//Token need to be generated at each load of the page so as to obtain a unique and non-duplicable value.
 	$token = bin2hex(random_bytes(16));
 	$_SESSION['csrf_token'] = $token; //Store token into SESSION
-	
+    
+    // Language list
+    $languages = [
+        'fr' => [
+            'code' => 'fr',
+            'name' => 'Français'
+        ], 
+        'en' => [
+            'code' => 'en',
+            'name' => 'English'
+        ]
+    ];
+
+    // Server list
+    $servers = [
+        'fr' => [
+            'Abhuva' => [
+                'name' => 'Abhuva',
+                'timezone' => 'Europe/Paris'
+            ],
+            'Lamia' => [
+                'name' => 'Lamia',
+                'timezone' => 'Europe/Paris'
+            ]
+        ],
+        // TODO find time for US servers, no informations about this (even for FR, they should be based in France now, but, timezone in forum seems to be incorrect)
+        'en' => [
+            'Unicorn' => [
+                'name' => 'Unicorn',
+                'timezone' => 'UTC'
+            ],
+            'Reviac' => [
+                'name' => 'Reviac',
+                'timezone' => 'UTC'
+            ]
+        ]
+    ];
+
     if(isSet($_GET['lang']))
     {
         $lang = $_GET['lang'];
@@ -105,7 +142,10 @@ $events = $req->fetchAll();
 	        <link href='css/jquery.qtip.min.css' rel='stylesheet' />
 
             <!-- FullCalendar -->
-	        <link href='css/fullcalendar.css' rel='stylesheet' />
+            <link href='css/fullcalendar.css' rel='stylesheet' />
+            
+            <!-- Select2 -->
+            <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6/css/select2.min.css" rel="stylesheet" />
 
             <!-- Menu -->
             <link href='css/menu.css' rel='stylesheet' />
@@ -154,6 +194,9 @@ $events = $req->fetchAll();
 	        <script src='js/fullcalendar/fullcalendar.js'></script>
 	        <script src='js/fullcalendar/locale/<?php echo $lang['HTML_LANGALT']; ?>.js'></script>
 
+            <!-- Select2 -->
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6/js/select2.min.js"></script>
+
             <!-- Menu -->
             <script src="js/classie.js"></script>
             <script src="js/menu.js"></script>
@@ -165,6 +208,7 @@ $events = $req->fetchAll();
 			<script type="text/javascript" src="js/loginbis.js"></script>
 			<script type="text/javascript" src="js/signbis.js"></script>
     	    <script type="text/javascript" src="js/addevent.js"></script>
+    	    <script type="text/javascript" src="js/site.js"></script>
 
         <!-- END JS REFERENCES -->
 

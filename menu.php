@@ -83,7 +83,16 @@
 								<li>
                                     <a>
                                         <span class="fa fa-globe"></span>
-                                        <?php echo $lang['MENU_LANGUAGES']; ?> -&nbsp; <a href="index.php?lang=fr"><span class="flag-icon flag-icon-fr"></span></a>&nbsp; <a href="index.php?lang=en"><span class="flag-icon flag-icon-us"></span><span class="flag-icon flag-icon-gb"></span></a>
+                                        <?php echo $lang['MENU_LANGUAGES']; ?> -&nbsp;
+                                        <?php 
+                                            foreach($languages as $language) { 
+                                                if ($language['code'] === 'en') { // TOOPTIMIZE a CSS workaround would be prettier ?>
+                                                    <a href="index.php?lang=en"><span class="flag-icon flag-icon-us"></span><span class="flag-icon flag-icon-gb"></span></a>
+                                            <?php } 
+                                                else { ?>
+                                                <a href="index.php?lang=<?php echo $language['code']  ?>"><span class="flag-icon flag-icon-<?php echo $language['code'] ?>"></span></a>&nbsp;
+                                                
+                                        <?php } } ?>
                                     </a>
                                 </li>
 							    </li>

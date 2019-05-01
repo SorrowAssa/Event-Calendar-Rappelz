@@ -129,6 +129,11 @@ $lang['USERSETTINGS_MYSETTINGS'] = 'My settings';
 $lang['USERSETTINGS_EVENT_TITLE'] = 'Title';
 $lang['USERSETTINGS_EVENT_SERVER'] = 'Server';
 $lang['USERSETTINGS_EVENT_DATE'] = 'Date';
+$lang['USERSETTINGS_ACCOUNT_LANGUAGE'] = 'Language';
+$lang['USERSETTINGS_ACCOUNT_SERVER'] = 'Server';
+$lang['USERSETTINGS_ACCOUNT_OLDPASSWORD'] = 'Old password';
+$lang['USERSETTINGS_ACCOUNT_NEWPASSWORD'] = 'New password';
+$lang['USERSETTINGS_ACCOUNT_CONFIRMPASSWORD'] = 'Confirm password';
 
 
 ?>

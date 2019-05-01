@@ -1,5 +1,14 @@
 <?php require_once 'header.php' ?>
-    <body>
+    <body><style>.select2-results__option {
+    color: #495057;
+}
+.select2-selection--multiple {
+  height: 2rem;
+  max-height: 2rem;
+  overflow: auto;
+}
+
+</style>
         <!-- Page Content -->
         <div class="container">
 		
@@ -648,13 +657,43 @@
                                                     </div>
                                                     <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
                                                         <div class="card-body">
-                                                            TODO
-                                                            <ul>
-                                                                <li>language</li>
-                                                                <li>server</li>
-                                                                <li>change password</li>
-                                                                <li><strike>change username ?</strike></li>
-                                                            </ul>
+
+                                                            form
+                                                            <div class="form-group">
+                                                                <label for="user_language"><?php echo $lang['USERSETTINGS_ACCOUNT_LANGUAGE']; ?></label>
+                                                                <select class="select-flag" name="user_language">
+                                                                    <?php 
+                                                                        foreach($languages as $language) { ?>
+                                                                            <option value="<?php echo $language['code']; ?>" <?php echo $userData->language === $language['code'] ? 'selected' : ''; ?>><?php echo $language['name']; ?></option>
+                                                                    <?php } ?>
+                                                                </select>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="user_server"><?php echo $lang['USERSETTINGS_ACCOUNT_SERVER']; ?></label>
+                                                                <select class="select2-simple" name="user_server">
+                                                                    <?php 
+                                                                        // No need to care about language change because it will cause a page reload
+                                                                        if ((isset($userData->language) && trim($userData->language) !== '')) {
+                                                                            foreach($servers[$userData->language] as $server) {
+                                                                    ?>
+                                                                        <option value="<?php echo $server['name']; ?>" <?php echo isset($userData->server) && $userData->server === $server['name'] ? 'selected' : ''; ?>><?php echo $server['name']; ?></option>
+                                                                    <?php } } ?>
+                                                                </select>
+                                                            </div>
+
+                                                            <hr />
+                                                            <div class="form-group">
+                                                                <label for="old_password"><?php echo $lang['USERSETTINGS_ACCOUNT_OLDPASSWORD']; ?></label>
+                                                                <input class="form-control" name="old_password" type="password" />
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="new_password"><?php echo $lang['USERSETTINGS_ACCOUNT_NEWPASSWORD']; ?></label>
+                                                                <input class="form-control" name="new_password" type="password" />
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="confirm_password"><?php echo $lang['USERSETTINGS_ACCOUNT_CONFIRMPASSWORD']; ?></label>
+                                                                <input class="form-control" name="confirm_password" type="password" />
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -667,7 +706,7 @@
                                                 </div>
                                                 <div>
                                                     <!-- TODO set flag with user language -->
-                                                    <span><?php echo $lang['USERSETTINGS_LANG']; ?> : </span> <span class="flag-icon flag-icon-fr"></span>
+                                                    <span><?php echo $lang['USERSETTINGS_LANG']; ?> : </span> <span class="flag-icon flag-icon-<?php echo $userData->language; ?>"></span>
                                                 </div>
                                                 <div>
                                                     <span><?php echo $lang['USERSETTINGS_SERVER']; ?> : </span> <?php echo (isset($userData->server) && trim($userData->server) !== '') ? htmlentities($userData->server) : '-'; ?>
@@ -689,8 +728,27 @@
         </div>
 
 	    <script type="text/javascript">
+                                
 	        $(document).ready(function() {
 
+                /*** User settings  ***/
+
+                // Select with flags
+                $(".select-flag").select2({
+                    minimumResultsForSearch: -1,
+                    width: "100%",
+                    templateSelection: formatSelectFlag,
+                    templateResult: formatSelectFlag,
+                    allowHtml: true,
+                    closeOnSelect: true
+                });
+
+                $(".select2-simple").select2({
+                    minimumResultsForSearch: -1,
+                    width: "100%"
+                });
+
+                /*** Fullcalendar***/
 	           var date = new Date();
                var yyyy = date.getFullYear().toString();
                var mm = (date.getMonth()+1).toString().length == 1 ? "0"+(date.getMonth()+1).toString() : (date.getMonth()+1).toString();
